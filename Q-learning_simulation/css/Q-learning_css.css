@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+
+/* ボタン関連の設定 */
+input.btn{
+    width: 100px;
+    height: 40px;
+    position: relative;
+    top: 20px;
+    left: 50px;
+}
+
+/* 数字表示ボタンの設定 */
+input.math{
+    width: 70px;
+    height: 70px;
+    background-color: #ffffff;
+    position:relative;
+    top: 20px;
+    left: 20px;
+    vertical-align : top;
+    float: left;
+}
+
+input.mathStart{
+    width: 70px;
+    height: 70px;
+    background-color: blue;
+    position:relative;
+    top: 20px;
+    left: 20px;
+    vertical-align : top;
+    float: left;
+}
+
+input.mathGoal{
+    width: 70px;
+    height: 70px;
+    background-color: red;
+    position:relative;
+    top: 20px;
+    left: 20px;
+    vertical-align : top;
+    float: left;
+}
+
+/* 数字ボタンの大枠の設定 */
+div.form{
+    width: 670px; 
+    height: 670px; 
+    border: solid;
+    position: relative;
+    top: -165px;
+    left: 200px;
+    vertical-align : top;
+}
+
+/* 見出しの設定 */
+h.title{
+    font-weight: bold;
+    font-size: 25px;
+}

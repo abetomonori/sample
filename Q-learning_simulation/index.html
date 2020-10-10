@@ -1,0 +1,141 @@
+<IDOCTYPE html>
+    <html lang ="ja">
+        <head>
+            <!-- 文字コードの設定 -->
+            <meta charset = "UTF-8" >
+            <!-- HTMLのタイトルの設定 -->
+            <title>Route Choice with Q-learning</title>
+            <!-- CSSファイルの設定 -->
+            <link rel = "stylesheet" href = "./css/Q-learning_css.css" tyep = "text/css">
+            <!-- JSファイルの設定 -->
+            <script type = "text/javascript" src = "./js/Q-learning_javascript.js"></script>
+        </head>
+        <body>
+            
+            <!-- 見出しの設定 -->
+            <h class = "title" >Q-learningによる経路探索シミュレーション</h>
+
+            <p>内容：自作の迷路に対し、スタートからゴールまでの最短経路をAIが導きます。</p>
+            <u><p>遊び方</p></u>
+            <ol>
+                <li>スタートボタンを押して障害物を配置します。9×9マスの好きな位置に配置してください。</li>
+                <li>配置が完了したら経路探索開始ボタンを押してください。</li>
+                <li>終了ボタンで最初に戻ります。</li>
+            </ol>
+            <p>S：スタート地点　　　G：ゴール地点　　　△：障害物</p>
+
+            <br>
+            <p id = "obstacleNote"><font color="red">【ステップ１】スタートを押してゲームを開始してください。</font></p>
+            <!--スタートボタンが押されたら、右の９×９の好きなマスを左クリックして障害物を配置、という文字を出したい-->
+            
+            <!-- ボタン部分のフォーム -->
+            <form name = "inputForm">
+                <!-- スタートボタン -->
+                <input type="button" class = "btn start" name = "btnStart" value = "スタート" onClick = "btnStartOnClick()">
+                <br></br>
+                <!-- 経路探索開始ボタン -->
+                <input type="button" class = "btn keiro" name = "btnKeiro" value = "経路探索開始" onClick = "QLearning.btnKeiroOnClick()">
+                <br></br>
+                <!-- 終了ボタン -->
+                <input type="button" class = "btn" name = "btnEnd" value = "終了" onClick = "btnEndOnClick()">
+            </form>
+            
+            <!-- 数字部分のフォーム -->
+            <form name = "matrixForm">
+                <!-- 数字部分の太枠の設定 -->
+                <div class="form">
+                    <!-- 数字部分の各ボタン -->
+                    <input type ="button" id = "1" class = "math mathStart" value = "S" onClick = "btnNumOnClick(1)"></input>
+                    <input type ="button" id = "2" class = "math" value = "" onClick = "btnNumOnClick(2)"></input>
+                    <input type ="button" id = "3" class = "math" value = "" onClick = "btnNumOnClick(3)"></input>
+                    <input type ="button" id = "4" class = "math" value = "" onClick = "btnNumOnClick(4)"></input>
+                    <input type ="button" id = "5" class = "math" value = "" onClick = "btnNumOnClick(5)"></input>
+                    <input type ="button" id = "6" class = "math" value = "" onClick = "btnNumOnClick(6)"></input>
+                    <input type ="button" id = "7" class = "math" value = "" onClick = "btnNumOnClick(7)"></input>
+                    <input type ="button" id = "8" class = "math" value = "" onClick = "btnNumOnClick(8)"></input>
+                    <input type ="button" id = "9" class = "math" value = "" onClick = "btnNumOnClick(9)"></input>
+
+                    <input type ="button" id = "10" class = "math" value = "" onClick = "btnNumOnClick(10)"></input>
+                    <input type ="button" id = "11" class = "math" value = "" onClick = "btnNumOnClick(11)"></input>
+                    <input type ="button" id = "12" class = "math" value = "" onClick = "btnNumOnClick(12)"></input>
+                    <input type ="button" id = "13" class = "math" value = "" onClick = "btnNumOnClick(13)"></input>
+                    <input type ="button" id = "14" class = "math" value = "" onClick = "btnNumOnClick(14)"></input>
+                    <input type ="button" id = "15" class = "math" value = "" onClick = "btnNumOnClick(15)"></input>
+                    <input type ="button" id = "16" class = "math" value = "" onClick = "btnNumOnClick(16)"></input>
+                    <input type ="button" id = "17" class = "math" value = "" onClick = "btnNumOnClick(17)"></input>
+                    <input type ="button" id = "18" class = "math" value = "" onClick = "btnNumOnClick(18)"></input>
+
+                    <input type ="button" id = "19" class = "math" value = "" onClick = "btnNumOnClick(19)"></input>
+                    <input type ="button" id = "20" class = "math" value = "" onClick = "btnNumOnClick(20)"></input>
+                    <input type ="button" id = "21" class = "math" value = "" onClick = "btnNumOnClick(21)"></input>
+                    <input type ="button" id = "22" class = "math" value = "" onClick = "btnNumOnClick(22)"></input>
+                    <input type ="button" id = "23" class = "math" value = "" onClick = "btnNumOnClick(23)"></input>
+                    <input type ="button" id = "24" class = "math" value = "" onClick = "btnNumOnClick(24)"></input>
+                    <input type ="button" id = "25" class = "math" value = "" onClick = "btnNumOnClick(25)"></input>
+                    <input type ="button" id = "26" class = "math" value = "" onClick = "btnNumOnClick(26)"></input>
+                    <input type ="button" id = "27" class = "math" value = "" onClick = "btnNumOnClick(27)"></input>
+
+                    <input type ="button" id = "28" class = "math" value = "" onClick = "btnNumOnClick(28)"></input>
+                    <input type ="button" id = "29" class = "math" value = "" onClick = "btnNumOnClick(29)"></input>
+                    <input type ="button" id = "30" class = "math" value = "" onClick = "btnNumOnClick(30)"></input>
+                    <input type ="button" id = "31" class = "math" value = "" onClick = "btnNumOnClick(31)"></input>
+                    <input type ="button" id = "32" class = "math" value = "" onClick = "btnNumOnClick(32)"></input>
+                    <input type ="button" id = "33" class = "math" value = "" onClick = "btnNumOnClick(33)"></input>
+                    <input type ="button" id = "34" class = "math" value = "" onClick = "btnNumOnClick(34)"></input>
+                    <input type ="button" id = "35" class = "math" value = "" onClick = "btnNumOnClick(35)"></input>
+                    <input type ="button" id = "36" class = "math" value = "" onClick = "btnNumOnClick(36)"></input>
+
+                    <input type ="button" id = "37" class = "math" value = "" onClick = "btnNumOnClick(37)"></input>
+                    <input type ="button" id = "38" class = "math" value = "" onClick = "btnNumOnClick(38)"></input>
+                    <input type ="button" id = "39" class = "math" value = "" onClick = "btnNumOnClick(39)"></input>
+                    <input type ="button" id = "40" class = "math" value = "" onClick = "btnNumOnClick(40)"></input>
+                    <input type ="button" id = "41" class = "math" value = "" onClick = "btnNumOnClick(41)"></input>
+                    <input type ="button" id = "42" class = "math" value = "" onClick = "btnNumOnClick(42)"></input>
+                    <input type ="button" id = "43" class = "math" value = "" onClick = "btnNumOnClick(43)"></input>
+                    <input type ="button" id = "44" class = "math" value = "" onClick = "btnNumOnClick(44)"></input>
+                    <input type ="button" id = "45" class = "math" value = "" onClick = "btnNumOnClick(45)"></input>
+
+                    <input type ="button" id = "46" class = "math" value = "" onClick = "btnNumOnClick(46)"></input>
+                    <input type ="button" id = "47" class = "math" value = "" onClick = "btnNumOnClick(47)"></input>
+                    <input type ="button" id = "48" class = "math" value = "" onClick = "btnNumOnClick(48)"></input>
+                    <input type ="button" id = "49" class = "math" value = "" onClick = "btnNumOnClick(49)"></input>
+                    <input type ="button" id = "50" class = "math" value = "" onClick = "btnNumOnClick(50)"></input>
+                    <input type ="button" id = "51" class = "math" value = "" onClick = "btnNumOnClick(51)"></input>
+                    <input type ="button" id = "52" class = "math" value = "" onClick = "btnNumOnClick(52)"></input>
+                    <input type ="button" id = "53" class = "math" value = "" onClick = "btnNumOnClick(53)"></input>
+                    <input type ="button" id = "54" class = "math" value = "" onClick = "btnNumOnClick(54)"></input>
+
+                    <input type ="button" id = "55" class = "math" value = "" onClick = "btnNumOnClick(55)"></input>
+                    <input type ="button" id = "56" class = "math" value = "" onClick = "btnNumOnClick(56)"></input>
+                    <input type ="button" id = "57" class = "math" value = "" onClick = "btnNumOnClick(57)"></input>
+                    <input type ="button" id = "58" class = "math" value = "" onClick = "btnNumOnClick(58)"></input>
+                    <input type ="button" id = "59" class = "math" value = "" onClick = "btnNumOnClick(59)"></input>
+                    <input type ="button" id = "60" class = "math" value = "" onClick = "btnNumOnClick(60)"></input>
+                    <input type ="button" id = "61" class = "math" value = "" onClick = "btnNumOnClick(61)"></input>
+                    <input type ="button" id = "62" class = "math" value = "" onClick = "btnNumOnClick(62)"></input>
+                    <input type ="button" id = "63" class = "math" value = "" onClick = "btnNumOnClick(63)"></input>
+
+                    <input type ="button" id = "64" class = "math" value = "" onClick = "btnNumOnClick(64)"></input>
+                    <input type ="button" id = "65" class = "math" value = "" onClick = "btnNumOnClick(65)"></input>
+                    <input type ="button" id = "66" class = "math" value = "" onClick = "btnNumOnClick(66)"></input>
+                    <input type ="button" id = "67" class = "math" value = "" onClick = "btnNumOnClick(67)"></input>
+                    <input type ="button" id = "68" class = "math" value = "" onClick = "btnNumOnClick(68)"></input>
+                    <input type ="button" id = "69" class = "math" value = "" onClick = "btnNumOnClick(69)"></input>
+                    <input type ="button" id = "70" class = "math" value = "" onClick = "btnNumOnClick(70)"></input>
+                    <input type ="button" id = "71" class = "math" value = "" onClick = "btnNumOnClick(71)"></input>
+                    <input type ="button" id = "72" class = "math" value = "" onClick = "btnNumOnClick(72)"></input>
+
+                    <input type ="button" id = "73" class = "math" value = "" onClick = "btnNumOnClick(73)"></input>
+                    <input type ="button" id = "74" class = "math" value = "" onClick = "btnNumOnClick(74)"></input>
+                    <input type ="button" id = "75" class = "math" value = "" onClick = "btnNumOnClick(75)"></input>
+                    <input type ="button" id = "76" class = "math" value = "" onClick = "btnNumOnClick(76)"></input>
+                    <input type ="button" id = "77" class = "math" value = "" onClick = "btnNumOnClick(77)"></input>
+                    <input type ="button" id = "78" class = "math" value = "" onClick = "btnNumOnClick(78)"></input>
+                    <input type ="button" id = "79" class = "math" value = "" onClick = "btnNumOnClick(79)"></input>
+                    <input type ="button" id = "80" class = "math" value = "" onClick = "btnNumOnClick(80)"></input>
+                    <input type ="button" id = "81" class = "math mathGoal" value = "G" onClick = "btnNumOnClick(81)"></input>
+                </div>
+            </form>
+    
+        </body>
+    </html>
